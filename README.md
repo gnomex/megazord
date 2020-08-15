@@ -34,3 +34,32 @@ The ideia is a configurable mechanized module, where you just need to configure 
 - https://schneems.com/2020/06/25/rate-limiting-rate-throttling-and-how-they-work-together/
 - https://cloud.google.com/solutions/rate-limiting-strategies-techniques#techniques-enforcing-rate-limits
 - https://medium.com/@c.andrewlong/ruby-mechanize-5-common-errors-and-how-to-fix-them-68fa88a282ec
+
+--
+
+# Designing the API
+
+> still a wip
+
+```ruby
+class Robot
+  include Megazord
+
+  act_as_robotiable :loggable, :no_ssl, :accountable, :throttleable
+
+  base_url ""
+  retryable strategy: :backpressure
+  prevent :captcha, rate: 10, per: :hour
+  prevent :429
+  url_switchable [] # urls
+  authenticable  {} #extra headers
+  handleable_with [
+    { "ex_class1": lambda {|e| puts e.message }},
+    { "ex_class2": lambda {|e| puts "#{e.message} again" }},
+  ] # custom handlers
+
+
+end
+
+
+```
